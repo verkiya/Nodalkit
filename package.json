@@ -1,0 +1,8 @@
+{
+  "name": "nodalkit-workspace",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ]
+}
