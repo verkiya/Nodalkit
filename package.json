@@ -4,5 +4,8 @@
   "type": "module",
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "scripts": {
+    "dev:cli": "bun run packages/cli/src/index.ts"
+  }
 }
