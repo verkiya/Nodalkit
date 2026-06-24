@@ -1,14 +1,4 @@
-﻿{
+{
   "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@modelcontextprotocol/sdk/server/mcp": [
-        "./node_modules/@modelcontextprotocol/sdk/dist/esm/server/mcp.js"
-      ],
-      "@modelcontextprotocol/sdk/server/stdio": [
-        "./node_modules/@modelcontextprotocol/sdk/dist/esm/server/stdio.js"
-      ]
-    }
-  }
+  "compilerOptions": {}
 }
