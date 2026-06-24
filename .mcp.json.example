@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "nodalkit": {
+      "type": "stdio",
+      "command": "bun",
+      "args": ["run", "dev:localmcp"],
+      "env": {
+        "TELEGRAM_BOT_TOKEN": "<bot-token>"
+      }
+    }
+  }
+}
