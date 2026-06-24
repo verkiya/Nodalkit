@@ -14,16 +14,13 @@ export async function sendTelegramMessage(
     chat_id: parsedInput.chatId,
     text: parsedInput.message,
   });
-  const response = await fetch(
-    `https://api.telegram.org/bot${parsedInput.botToken}/sendMessage`,
-    {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: await Response.json(requestBody).text(),
+  const response = await fetch(`https://api.telegram.org/bot${parsedInput.botToken}/sendMessage`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
     },
-  );
+    body: await Response.json(requestBody).text(),
+  });
   const data = telegramSendMessageResponseSchema.parse(await response.json());
   if (!response.ok || !data.ok || !data.result) {
     throw new Error(data.description ?? "Telegram message request failed");

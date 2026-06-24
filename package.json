@@ -1,17 +1,26 @@
 {
   "name": "nodalkit-workspace",
   "private": true,
-  "type": "module",
   "workspaces": [
     "packages/*",
     "apps/*"
   ],
+  "type": "module",
   "scripts": {
+    "format": "oxfmt . --write",
+    "format:check": "oxfmt . --check",
+    "lint": "oxlint . --deny-warnings",
+    "lint:fix": "oxlint . --fix",
+    "check": "bun run format && bun run lint && tsc --noEmit",
     "dev:cli": "bun run packages/cli/src/index.ts",
     "dev:localmcp": "bun run packages/localmcp/src/index.ts",
     "dev:remotemcp": "bun run apps/remotemcp/src/index.ts"
   },
   "devDependencies": {
-    "@types/node": "^26.0.0"
+    "@types/node": "^26.0.0",
+    "oxfmt": "^0.56.0",
+    "oxlint": "^1.71.0",
+    "tsdown": "^0.22.3",
+    "typescript": "^6.0.3"
   }
 }

@@ -25,7 +25,5 @@ export const telegramMessageOutputSchema = z.object({
   messageId: z.number(),
 });
 export type TelegramMessageInput = z.infer<typeof telegramMessageInputSchema>;
-export type TelegramMessageOptions = z.infer<
-  typeof telegramMessageOptionsSchema
->;
+export type TelegramMessageOptions = z.infer<typeof telegramMessageOptionsSchema>;
 export type TelegramMessageOutput = z.infer<typeof telegramMessageOutputSchema>;
