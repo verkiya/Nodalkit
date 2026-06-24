@@ -4,25 +4,43 @@
   "workspaces": {
     "": {
       "name": "nodalkit-workspace",
+      "devDependencies": {
+        "@types/node": "^26.0.0",
+      },
     },
     "packages/cli": {
       "name": "nodalkit",
       "version": "1.0.0",
       "dependencies": {
+        "chalk": "^5.6.2",
         "commander": "^15.0.0",
+        "nodalkit-core": "workspace:*",
       },
       "devDependencies": {
         "@types/node": "^26.0.0",
+      },
+    },
+    "packages/core": {
+      "name": "nodalkit-core",
+      "version": "1.0.0",
+      "dependencies": {
+        "zod": "^4.4.3",
       },
     },
   },
   "packages": {
     "@types/node": ["@types/node@26.0.0", "", { "dependencies": { "undici-types": "~8.3.0" } }, "sha512-vf2YFi1iY9lHGwNJMs01biZFbKJkrZR1T6/MlzjhJLPdntOHLhTrDSnSVcdtvjihi4VQNlrFRIxLsDBlQpAipA=="],
 
+    "chalk": ["chalk@5.6.2", "", {}, "sha512-7NzBL0rN6fMUW+f7A6Io4h40qQlG+xGmtMxfbnH/K7TAtt8JQWVQK+6g0UXKMeVJoyV5EkkNsErQ8pVD3bLHbA=="],
+
     "commander": ["commander@15.0.0", "", {}, "sha512-z67u4ZhzCL/Tydu1lJARtEZYWbWaN7oYLHbsuzocr6y4N6WZAagG3RQ4FW61V1/0+jImpj293XfrcYnd1qxtPg=="],
 
     "nodalkit": ["nodalkit@workspace:packages/cli"],
 
+    "nodalkit-core": ["nodalkit-core@workspace:packages/core"],
+
     "undici-types": ["undici-types@8.3.0", "", {}, "sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ=="],
+
+    "zod": ["zod@4.4.3", "", {}, "sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ=="],
   }
 }
