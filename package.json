@@ -6,7 +6,8 @@
     "packages/*"
   ],
   "scripts": {
-    "dev:cli": "bun run packages/cli/src/index.ts"
+    "dev:cli": "bun run packages/cli/src/index.ts",
+    "dev:localmcp": "bun run packages/localmcp/src/index.ts"
   },
   "devDependencies": {
     "@types/node": "^26.0.0"
