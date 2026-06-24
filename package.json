@@ -9,6 +9,9 @@
   "scripts": {
     "format": "oxfmt . --write",
     "format:check": "oxfmt . --check",
+    "build:core": "bun run --filter @nodalkit/nodalkit-core build",
+    "build:cli": "bun run --filter @nodalkit/nodalkit build",
+    "build:localmcp": "bun run --filter @nodalkit/localmcp build",
     "lint": "oxlint . --deny-warnings",
     "lint:fix": "oxlint . --fix",
     "check": "bun run format && bun run lint && tsc --noEmit",

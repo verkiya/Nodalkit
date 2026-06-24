@@ -1,10 +1,13 @@
 {
-  "name": "nodalkit-core",
+  "name": "@nodalkit/nodalkit-core",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "exports": {
     ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsdown"
   },
   "dependencies": {
     "zod": "^4.4.3"

@@ -5,7 +5,7 @@ import { homedir } from "node:os";
 import { join, dirname } from "node:path";
 import { z } from "zod";
 
-import { sendTelegramMessage } from "nodalkit-core";
+import { sendTelegramMessage } from "@nodalkit/nodalkit-core";
 
 const program = new Command();
 

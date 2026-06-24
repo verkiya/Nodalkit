@@ -1,14 +1,17 @@
 {
-  "name": "nodalkit-mcp",
+  "name": "@nodalkit/nodalkit-mcp",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "exports": {
     ".": "./src/index.ts"
   },
+  "scripts": {
+    "build": "tsdown"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
-    "nodalkit-core": "workspace:*",
+    "@nodalkit/nodalkit-core": "workspace:*",
     "zod": "^4.4.3"
   }
 }

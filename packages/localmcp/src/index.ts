@@ -1,6 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio";
-import { sendTelegramMessage, telegramMessageInputSchema } from "nodalkit-core";
+import { sendTelegramMessage, telegramMessageInputSchema } from "@nodalkit/nodalkit-core";
 const server = new McpServer({
   name: "nodalkit-local",
   version: "1.0.0",
