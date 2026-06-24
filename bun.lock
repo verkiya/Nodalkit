@@ -8,6 +8,18 @@
         "@types/node": "^26.0.0",
       },
     },
+    "apps/remotemcp": {
+      "name": "nodalkit-remotemcp",
+      "version": "1.0.0",
+      "dependencies": {
+        "@modelcontextprotocol/sdk": "^1.29.0",
+        "hono": "^4.12.27",
+        "nodalkit-core": "workspace:*",
+      },
+      "devDependencies": {
+        "@types/node": "^26.0.0",
+      },
+    },
     "packages/cli": {
       "name": "nodalkit",
       "version": "1.0.0",
@@ -168,6 +180,8 @@
     "nodalkit-core": ["nodalkit-core@workspace:packages/core"],
 
     "nodalkit-mcp": ["nodalkit-mcp@workspace:packages/localmcp"],
+
+    "nodalkit-remotemcp": ["nodalkit-remotemcp@workspace:apps/remotemcp"],
 
     "object-assign": ["object-assign@4.1.1", "", {}, "sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg=="],
 

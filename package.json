@@ -3,11 +3,13 @@
   "private": true,
   "type": "module",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "apps/*"
   ],
   "scripts": {
     "dev:cli": "bun run packages/cli/src/index.ts",
-    "dev:localmcp": "bun run packages/localmcp/src/index.ts"
+    "dev:localmcp": "bun run packages/localmcp/src/index.ts",
+    "dev:remotemcp": "bun run apps/remotemcp/src/index.ts"
   },
   "devDependencies": {
     "@types/node": "^26.0.0"
