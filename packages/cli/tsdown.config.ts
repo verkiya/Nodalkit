@@ -10,6 +10,14 @@ export default defineConfig({
   outDir: "dist",
   outExtensions: () => ({ js: ".js", dts: ".d.ts" }),
   deps: {
-    neverBundle: ["@nodalkit/nodalkit-core", "boxen", "chalk", "commander", "gradient-string", "ora", "zod"],
+    neverBundle: [
+      "@nodalkit/nodalkit-core",
+      "boxen",
+      "chalk",
+      "commander",
+      "gradient-string",
+      "ora",
+      "zod",
+    ],
   },
 });

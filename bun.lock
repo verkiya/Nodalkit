@@ -5,7 +5,7 @@
     "": {
       "name": "nodalkit-workspace",
       "devDependencies": {
-        "@types/node": "^26.0.0",
+        "@types/node": "^26.0.1",
         "oxfmt": "^0.56.0",
         "oxlint": "^1.71.0",
         "tsdown": "^0.22.3",
@@ -25,7 +25,10 @@
     },
     "packages/cli": {
       "name": "@nodalkit/nodalkit",
-      "version": "1.0.0",
+      "version": "1.0.2",
+      "bin": {
+        "nodalkit": "./dist/index.js",
+      },
       "dependencies": {
         "@nodalkit/nodalkit-core": "workspace:*",
         "boxen": "^8.0.1",
@@ -38,14 +41,17 @@
     },
     "packages/core": {
       "name": "@nodalkit/nodalkit-core",
-      "version": "1.0.0",
+      "version": "1.0.2",
       "dependencies": {
         "zod": "^4.4.3",
       },
     },
     "packages/localmcp": {
-      "name": "@nodalkit/nodalkit-mcp",
-      "version": "1.0.0",
+      "name": "@nodalkit/localmcp",
+      "version": "1.0.5",
+      "bin": {
+        "nodalkit-localmcp": "./dist/index.js",
+      },
       "dependencies": {
         "@modelcontextprotocol/sdk": "^1.29.0",
         "@nodalkit/nodalkit-core": "workspace:*",
@@ -90,11 +96,11 @@
 
     "@napi-rs/wasm-runtime": ["@napi-rs/wasm-runtime@1.1.6", "", { "dependencies": { "@tybys/wasm-util": "^0.10.3" }, "peerDependencies": { "@emnapi/core": "^1.7.1", "@emnapi/runtime": "^1.7.1" } }, "sha512-ZLv/JdUfkvOy9eCnnBaGfiO+XimbjebAeO+MRQqD/B+FR1tnRN0tpKSJHRbE8sFfS6aqsXZ67TQjfwfsxULVbg=="],
 
+    "@nodalkit/localmcp": ["@nodalkit/localmcp@workspace:packages/localmcp"],
+
     "@nodalkit/nodalkit": ["@nodalkit/nodalkit@workspace:packages/cli"],
 
     "@nodalkit/nodalkit-core": ["@nodalkit/nodalkit-core@workspace:packages/core"],
-
-    "@nodalkit/nodalkit-mcp": ["@nodalkit/nodalkit-mcp@workspace:packages/localmcp"],
 
     "@oxc-project/types": ["@oxc-project/types@0.137.0", "", {}, "sha512-WT+Gb24i8hmvo85AIv2oEYouEXkRlKAlT9WaCa3TfLgNCN+GhrJOGZuIlMouAh38Qe4QOx26eUOVsq70qXrywA=="],
 
@@ -218,7 +224,7 @@
 
     "@types/jsesc": ["@types/jsesc@2.5.1", "", {}, "sha512-9VN+6yxLOPLOav+7PwjZbxiID2bVaeq0ED4qSQmdQTdjnXJSaCVKTR58t15oqH1H5t8Ng2ZX1SabJVoN9Q34bw=="],
 
-    "@types/node": ["@types/node@26.0.0", "", { "dependencies": { "undici-types": "~8.3.0" } }, "sha512-vf2YFi1iY9lHGwNJMs01biZFbKJkrZR1T6/MlzjhJLPdntOHLhTrDSnSVcdtvjihi4VQNlrFRIxLsDBlQpAipA=="],
+    "@types/node": ["@types/node@26.0.1", "", { "dependencies": { "undici-types": "~8.3.0" } }, "sha512-fc3KiUoBt6kie0N9bIW3E47vZsuaMf0PM2AaUpLCLT0s/LvX1nxAim6Fc049cNxODPpGm6qRAuUOB86SkRuPQw=="],
 
     "@types/tinycolor2": ["@types/tinycolor2@1.4.6", "", {}, "sha512-iEN8J0BoMnsWBqjVbWH/c0G0Hh7O21lpR2/+PrvAVgWdzL7eexIFm4JN/Wn10PTcmNdtS6U67r499mlWMXOxNw=="],
 

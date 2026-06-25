@@ -23,11 +23,11 @@
   "scripts": {
     "build": "tsdown",
     "pack:dry": "bun run build && bun pm pack --dry-run",
-    "prepublishOnly": "bun update && bun run build"
+    "prepublishOnly": "bun run build"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
-    "@nodalkit/nodalkit-core": "workspace:*",
+    "@nodalkit/nodalkit-core": "1.0.2",
     "zod": "^4.4.3"
   }
 }

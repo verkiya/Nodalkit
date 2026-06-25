@@ -1,9 +1,29 @@
 {
   "name": "@nodalkit/nodalkit",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module","scripts": {
-    "build":"tsdown"
+  "version": "1.0.2",
+  "bin": {
+    "nodalkit": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "pack:dry": "bun run build && bun pm pack --dry-run",
+    "prepublishOnly": "bun update && bun run build"
   },
   "dependencies": {
     "@nodalkit/nodalkit-core": "workspace:*",
