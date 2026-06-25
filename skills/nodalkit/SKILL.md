@@ -79,3 +79,53 @@ Use the CLI when the MCP server is not attached, or when manual testing is requi
 ### Verification
 
 If you must parse CLI results, use JSON flags (if implemented by the CLI adapter) or parse the standardized output. The CLI explicitly abstracts `@nodalkit/nodalkit-core` execution and returns a predictable structure.
+
+---
+
+## 📦 Package Design & TypeScript Patterns
+
+### Dependency Isolation
+
+- `packages/core` has **no dependencies** on Node-specific environment variables (`process.env`) or MCP SDKs.
+- Internal types and Zod schemas are rigorously exported so adapters remain strictly typed without redeclaring interfaces.
+
+### Data Validation
+
+- Input parameters are validated twice logically: first at the adapter boundary (e.g., parsing CLI arguments), and then strictly inside `packages/core` before the actual execution (e.g., `telegramMessageOptionsSchema.parse`).
+- Output is also strictly validated and typed via `z.infer`.
+
+---
+
+## 🛠️ Developer Experience & Tooling
+
+### Monorepo Tooling
+
+NodalKit uses a fast, unified tooling stack:
+
+- **Package Manager / Runtime**: Bun. It drastically speeds up installation and local execution (`bun run dev:cli`).
+- **Formatting**: Oxlint / Oxfmt (configured via `.oxlintrc.json` and `.oxfmtrc.json`).
+
+### Performance Considerations
+
+- **CLI**: Executed via Node (`#!/usr/bin/env node`) or Bun natively. Lightweight parsing using Commander.
+- **Remote MCP**: Built on **Hono**. This provides excellent performance, edge-compatibility, and minimal overhead for ephemeral MCP server instantiations per request.
+
+### Maintainability Decisions
+
+- **Immutable NPM Versions**: Publishing flow mandates explicit version bumps and locking. Once published, versions cannot be changed.
+- **Explicit Registration**: We deliberately avoid "magic" or dynamic tool registries. Adding an operation requires explicitly updating `schemas.ts`, `operations.ts`, the CLI index, and MCP tool registries. This guarantees transparency and grep-ability for agents and developers.
+
+---
+
+## 🚀 Publishing & Release Workflow
+
+NodalKit uses a coordinated publishing flow:
+
+1. **Core First**: `@nodalkit/nodalkit-core` must be published first, as adapters depend on it.
+2. **Adapters Second**: `@nodalkit/nodalkit` (CLI) and `@nodalkit/nodalkit-local` rely on the core package.
+3. **Immutability**: npm versions are immutable. Do not reuse failed publish version strings.
+4. **Pre-Publish Checks**: Run `bun run release:check` to ensure formatting, linting, and type-checking pass before any release.
+
+### `workspace:*` Dependencies
+
+NodalKit uses `workspace:*` for internal dependencies. `bun publish` natively handles rewriting `workspace:*` to the concrete published version within the registry manifest.

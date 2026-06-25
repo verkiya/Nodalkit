@@ -9,12 +9,15 @@ import { z } from "zod";
 /**
  * CLI Adapter for NodalKit
  *
+ * Architectural Intent:
  * This package serves as the human-facing and shell-scripting adapter.
- * It parses command line arguments and options, retrieves configuration from
- * the local filesystem, and delegates the actual execution to `@nodalkit/nodalkit-core`.
+ * It strictly acts as a translation layer: parsing command-line arguments,
+ * retrieving persistent configuration from the local filesystem, and
+ * delegating execution to the shared `@nodalkit/nodalkit-core`.
  *
- * By keeping business logic out of this file, we ensure the CLI behaves identically
- * to the MCP endpoints.
+ * By isolating terminal output, argument parsing, and `process.exit` inside
+ * this adapter, we guarantee that the core logic remains environment-agnostic
+ * and the CLI behaves identically to the MCP endpoints.
  */
 import { sendTelegramMessage } from "@nodalkit/nodalkit-core";
 
@@ -46,8 +49,13 @@ function writeTelegramBotToken(token: string) {
 
 /**
  * Securely retrieve the locally configured bot token.
- * We store this in the home directory so it persists across shell sessions.
- * MCP servers, by contrast, use the client's environment variables to fetch tokens dynamically.
+ *
+ * Credential Injection Strategy:
+ * We store this in the user's home directory so it persists across shell sessions.
+ * This is the CLI's specific implementation of credential resolution.
+ * MCP servers, by contrast, rely on their respective environments (client env vars
+ * or HTTP requests) to fetch tokens dynamically, ensuring secrets never leak
+ * into the tool input payload.
  */
 function getTelegramBotToken() {
   if (!existsSync(configPath)) {

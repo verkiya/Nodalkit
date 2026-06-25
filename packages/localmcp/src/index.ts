@@ -6,18 +6,26 @@ import { sendTelegramMessage, telegramMessageInputSchema } from "@nodalkit/nodal
 /**
  * Local MCP Server Adapter for NodalKit
  *
- * This package acts as the bridge between an MCP client (like an AI Agent or IDE)
- * and the NodalKit core logic. It runs as a local stdio process.
+ * Architectural Intent:
+ * This package acts as the bridge between an MCP client (like Claude Desktop
+ * or OpenCode) and the NodalKit core logic. It operates as a local stdio process,
+ * listening for JSON-RPC messages and forwarding them to `@nodalkit/nodalkit-core`.
+ * By keeping business logic out of this adapter, we ensure consistency with the CLI.
  */
 const server = new McpServer({
   name: "nodalkit-local",
   version: "1.0.0",
 });
+
 /**
  * Fetch the bot token directly from the injected environment variables.
- * We specifically DO NOT include the bot token in the MCP tool arguments schema.
- * Doing so would force the AI agent to somehow know or infer the secret.
- * Instead, the MCP client maps the host environment variables to this local MCP server process.
+ *
+ * Credential Injection Strategy:
+ * We explicitly DO NOT include the bot token in the MCP tool arguments schema.
+ * If credentials were part of the tool payload, the AI agent would be forced to
+ * handle the secret token in context, leading to potential leaks.
+ * Instead, the MCP client provisions the `TELEGRAM_BOT_TOKEN` in this server process's
+ * environment variables during initialization.
  */
 function getTelegramBotToken() {
   const token = process.env.TELEGRAM_BOT_TOKEN;

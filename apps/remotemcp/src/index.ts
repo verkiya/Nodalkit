@@ -8,10 +8,15 @@ import { sendTelegramMessage, telegramMessageInputSchema } from "@nodalkit/nodal
 /**
  * Remote MCP Server Adapter for NodalKit
  *
- * Exposes the NodalKit core logic over an HTTP bridge.
- * This adapter is designed to be multi-tenant. It relies on Clerk for OAuth
- * identity verification and extracts the user's specific Telegram bot token
- * directly from the request URL path.
+ * Architectural Intent:
+ * Exposes the NodalKit core logic over an HTTP bridge using Hono.
+ * This adapter is designed to be multi-tenant and serverless-compatible.
+ * It relies on Clerk for OAuth identity verification.
+ *
+ * Credential Injection Strategy:
+ * It extracts the user's specific Telegram bot token directly from the request
+ * URL path, meaning each request dynamically provisions its own credentials
+ * without leaking secrets into tool input schemas.
  */
 const clerkPublishableKey = process.env.CLERK_PUBLISHABLE_KEY;
 const clerkSecretKey = process.env.CLERK_SECRET_KEY;
@@ -29,9 +34,13 @@ const clerkClient = createClerkClient({
 
 /**
  * Creates an ephemeral, per-request MCP Server instance.
- * Because we extract the bot token from the URL, we pass it into the tool registration closure.
- * This ensures that this specific instance of the server is locked to the specific bot token
- * requested via the authenticated endpoint, without leaking it into the input schemas.
+ *
+ * Security & Data Isolation:
+ * Because we extract the bot token from the URL, we pass it directly into the
+ * tool registration closure. This guarantees that this ephemeral instance of the
+ * server is completely locked to the requested bot token without exposing it
+ * as an argument in the tool schema. This eliminates the risk of cross-tenant
+ * credential leakage in a serverless or multi-tenant environment.
  */
 function createServer(botToken: string) {
   const server = new McpServer({
@@ -87,10 +96,15 @@ app.get("/.well-known/oauth-protected-resource/:botToken/mcp", (c) => {
 /**
  * Main MCP POST endpoint
  *
- * 1. Validates the Bearer token against Clerk.
- * 2. Extracts the `botToken` from the URL path.
- * 3. Instantiates an ephemeral MCP server and HTTP transport.
- * 4. Proxies the raw request to the transport and automatically closes the server afterwards.
+ * Execution Flow:
+ * 1. OAuth Validation: Validates the incoming Bearer token using `@clerk/backend`.
+ *    Fails with `401 Unauthorized` and `WWW-Authenticate` headers if invalid.
+ * 2. Credential Extraction: Parses the `botToken` from the authenticated URL path.
+ * 3. Ephemeral Instantiation: Creates a completely new MCP server and HTTP transport
+ *    bound exclusively to that `botToken`.
+ * 4. Request Proxying: Passes the raw JSON-RPC request to the transport.
+ * 5. Deterministic Teardown: Enforces `server.close()` in a `finally` block to
+ *    prevent memory leaks and zombie servers in long-running processes.
  */
 app.post("/:botToken/mcp", async (c) => {
   const botToken = c.req.param("botToken");
