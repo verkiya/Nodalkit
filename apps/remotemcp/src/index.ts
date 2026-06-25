@@ -4,6 +4,15 @@ import { createClerkClient } from "@clerk/backend";
 import { generateClerkProtectedResourceMetadata } from "@clerk/mcp-tools/server";
 import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
 import { sendTelegramMessage, telegramMessageInputSchema } from "@nodalkit/nodalkit-core";
+
+/**
+ * Remote MCP Server Adapter for NodalKit
+ *
+ * Exposes the NodalKit core logic over an HTTP bridge.
+ * This adapter is designed to be multi-tenant. It relies on Clerk for OAuth
+ * identity verification and extracts the user's specific Telegram bot token
+ * directly from the request URL path.
+ */
 const clerkPublishableKey = process.env.CLERK_PUBLISHABLE_KEY;
 const clerkSecretKey = process.env.CLERK_SECRET_KEY;
 if (!clerkSecretKey) {
@@ -18,6 +27,12 @@ const clerkClient = createClerkClient({
   secretKey: clerkSecretKey,
 });
 
+/**
+ * Creates an ephemeral, per-request MCP Server instance.
+ * Because we extract the bot token from the URL, we pass it into the tool registration closure.
+ * This ensures that this specific instance of the server is locked to the specific bot token
+ * requested via the authenticated endpoint, without leaking it into the input schemas.
+ */
 function createServer(botToken: string) {
   const server = new McpServer({
     name: "nodalkit-remote",
@@ -69,6 +84,14 @@ app.get("/.well-known/oauth-protected-resource/:botToken/mcp", (c) => {
   );
 });
 
+/**
+ * Main MCP POST endpoint
+ *
+ * 1. Validates the Bearer token against Clerk.
+ * 2. Extracts the `botToken` from the URL path.
+ * 3. Instantiates an ephemeral MCP server and HTTP transport.
+ * 4. Proxies the raw request to the transport and automatically closes the server afterwards.
+ */
 app.post("/:botToken/mcp", async (c) => {
   const botToken = c.req.param("botToken");
   const authHeader = c.req.header("authorization");

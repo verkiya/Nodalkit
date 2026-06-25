@@ -6,6 +6,16 @@ import { homedir } from "node:os";
 import { join, dirname } from "node:path";
 import { z } from "zod";
 
+/**
+ * CLI Adapter for NodalKit
+ *
+ * This package serves as the human-facing and shell-scripting adapter.
+ * It parses command line arguments and options, retrieves configuration from
+ * the local filesystem, and delegates the actual execution to `@nodalkit/nodalkit-core`.
+ *
+ * By keeping business logic out of this file, we ensure the CLI behaves identically
+ * to the MCP endpoints.
+ */
 import { sendTelegramMessage } from "@nodalkit/nodalkit-core";
 
 const program = new Command();
@@ -34,6 +44,11 @@ function writeTelegramBotToken(token: string) {
   );
 }
 
+/**
+ * Securely retrieve the locally configured bot token.
+ * We store this in the home directory so it persists across shell sessions.
+ * MCP servers, by contrast, use the client's environment variables to fetch tokens dynamically.
+ */
 function getTelegramBotToken() {
   if (!existsSync(configPath)) {
     throw new Error("Telegram bot token is not configured. Run `nodalkit init`.");

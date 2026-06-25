@@ -6,6 +6,17 @@ import {
   type TelegramMessageOptions,
   type TelegramMessageOutput,
 } from "./schemas";
+/**
+ * Core operation: sendTelegramMessage
+ *
+ * All business logic is isolated in this core package.
+ * Adapters (CLI, Local MCP, Remote MCP) rely on this shared function.
+ * This ensures that a bug fix or feature addition here propagates correctly
+ * across all interfaces automatically.
+ *
+ * By strictly validating inputs inside this function using zod schemas,
+ * we guarantee that adapters cannot accidentally bypass data constraints.
+ */
 export async function sendTelegramMessage(
   input: TelegramMessageOptions,
 ): Promise<TelegramMessageOutput> {
