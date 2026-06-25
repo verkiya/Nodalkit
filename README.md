@@ -1,10 +1,11 @@
 <div align="center">
+  <img src="./public/nodalkit.svg" width="120" alt="NodalKit logo" />
   <h1>NodalKit</h1>
   <p><strong>Build agent-ready tools with one shared TypeScript core for MCP, CLI, and Skills.</strong></p>
   
   <p>
     <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="MIT license" /></a>
-    <a href="https://github.com/nodalkit/nodalkit"><img src="https://img.shields.io/github/stars/nodalkit/nodalkit?style=social" alt="GitHub stars" /></a>
+    <a href="https://github.com/verkiya/Nodalkit"><img src="https://img.shields.io/github/stars/verkiya/Nodalkit?style=social" alt="GitHub stars" /></a>
   </p>
 </div>
 
@@ -38,13 +39,7 @@ Currently, it features a canonical `sendTelegramMessage` operation, but the arch
 
 The core philosophy of NodalKit is that **business logic belongs in one place**.
 
-```mermaid
-flowchart TD
-    CLI["@nodalkit/nodalkit<br/>(CLI Adapter)"] --> CORE["@nodalkit/nodalkit-core"]
-    MCP["@nodalkit/localmcp<br/>(Local MCP Adapter)"] --> CORE
-    REMOTE["@nodalkit/remotemcp<br/>(Remote MCP Adapter)"] --> CORE
-    SKILL["skills/nodalkit<br/>(Agent Instructions)"] -.-> CORE
-```
+![NodalKit Architecture](./public/architecture.png)
 
 | Boundary                | Responsibility                                                                                                |
 | :---------------------- | :------------------------------------------------------------------------------------------------------------ |
