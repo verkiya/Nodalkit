@@ -10,6 +10,6 @@ export default defineConfig({
   outDir: "dist",
   outExtensions: () => ({ js: ".js", dts: ".d.ts" }),
   deps: {
-    neverBundle: ["@nodalkit/nodalkit-core", "@modelcontextprotocol/sdk","zod"],
+    neverBundle: ["@nodalkit/nodalkit-core", "@modelcontextprotocol/sdk", "zod"],
   },
 });
